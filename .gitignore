@@ -1,0 +1,27 @@
+# Virtual environment
+venv/
+.venv/
+env/
+
+# Environment secrets
+.env
+.env*
+
+# Local SQLite databases
+*.db
+*.db-journal
+*.sqlite3
+
+# Document uploads folder
+uploads/
+
+# Python caches and compiles
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+
+# OS-specific files
+.DS_Store
+Thumbs.db

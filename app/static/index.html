@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Antigravity | Advanced RAG Chatbot</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Marked.js for Markdown parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    
+    <!-- CSS stylesheet link -->
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="app-container">
+        
+        <!-- Collapsible Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="brand">
+                    <div class="brand-logo">
+                        <svg viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" class="glow-svg">
+                            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                        </svg>
+                    </div>
+                    <h1>Antigravity<span>RAG</span></h1>
+                </div>
+                <button class="icon-btn mobile-close" id="sidebarCloseBtn" aria-label="Close sidebar">
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            
+            <!-- Upload Area Section -->
+            <div class="sidebar-section">
+                <h3 class="section-title">Upload Documents</h3>
+                <div class="upload-zone" id="uploadZone">
+                    <input type="file" id="fileInput" multiple accept=".pdf,.docx,.txt" style="display: none;">
+                    <div class="upload-icon">
+                        <svg viewBox="0 0 24 24" width="36" height="36" stroke="currentColor" stroke-width="1.5" fill="none">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"></path>
+                        </svg>
+                    </div>
+                    <p class="upload-text">Drag & drop files here</p>
+                    <p class="upload-subtext">Supports PDF, DOCX, TXT</p>
+                    <button class="btn btn-secondary btn-sm" id="browseBtn">Browse Files</button>
+                </div>
+                
+                <!-- Multi-file Upload Progress Tracker -->
+                <div class="upload-progress-container" id="uploadProgress" style="display: none;">
+                    <div class="progress-details">
+                        <span class="file-name-progress" id="progressFileName">file.pdf</span>
+                        <span class="progress-percent" id="progressPercent">0%</span>
+                    </div>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" id="progressBarFill" style="width: 0%;"></div>
+                    </div>
+                    <div class="progress-stages">
+                        <span class="stage" id="stageRead">Parsing</span>
+                        <span class="stage-arrow">→</span>
+                        <span class="stage" id="stageChunk">Chunking</span>
+                        <span class="stage-arrow">→</span>
+                        <span class="stage" id="stageEmbed">Embedding</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Processed File List -->
+            <div class="sidebar-section files-list-section">
+                <div class="section-header">
+                    <h3 class="section-title">Indexed Knowledge Base</h3>
+                    <span class="badge" id="documentBadge">0 docs</span>
+                </div>
+                <div class="document-list" id="documentList">
+                    <div class="empty-state">
+                        <p>No documents uploaded yet.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sidebar Footer Buttons -->
+            <div class="sidebar-footer">
+                <button class="btn btn-danger btn-block btn-sm" id="clearStoreBtn">
+                    <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                    Purge Knowledge Base
+                </button>
+            </div>
+        </aside>
+        
+        <!-- Main Chat Area -->
+        <main class="main-content">
+            
+            <!-- Top App Bar -->
+            <header class="top-bar">
+                <div class="top-bar-left">
+                    <button class="icon-btn sidebar-toggle" id="sidebarToggleBtn" aria-label="Toggle sidebar">
+                        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                    </button>
+                    <div class="mobile-brand">Antigravity RAG</div>
+                    <div class="status-indicator">
+                        <span class="status-dot online"></span>
+                        <span class="status-text" id="statusMessage">System Ready</span>
+                    </div>
+                </div>
+                
+                <div class="top-bar-right">
+                    <!-- Config Trigger Button -->
+                    <button class="btn btn-primary" id="settingsToggleBtn">
+                        <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" class="spin-svg"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                        RAG Settings
+                    </button>
+                </div>
+            </header>
+            
+            <!-- Chat Messages Log Window -->
+            <div class="chat-container">
+                <div class="chat-messages" id="chatMessages">
+                    
+                    <!-- Landing Welcome Screen -->
+                    <div class="welcome-screen" id="welcomeScreen">
+                        <div class="welcome-icon">
+                            <svg viewBox="0 0 24 24" width="64" height="64" stroke="currentColor" stroke-width="1.5" fill="none" class="pulse-svg">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                            </svg>
+                        </div>
+                        <h2>Ask anything about your documents</h2>
+                        <p>Upload PDFs, DOCX, or text files in the sidebar, configure your preferred LLM provider, and start chatting with your knowledge base in real time.</p>
+                        
+                        <div class="suggestions-grid">
+                            <div class="suggestion-card" data-prompt="Summarize the core contents of my document.">
+                                <h4>Summarize file</h4>
+                                <p>"Summarize the core contents of my document."</p>
+                            </div>
+                            <div class="suggestion-card" data-prompt="What are the key requirements and deliverables defined?">
+                                <h4>Find deliverables</h4>
+                                <p>"What are the key requirements and deliverables defined?"</p>
+                            </div>
+                            <div class="suggestion-card" data-prompt="Analyze the document and list any potential risks or conflicts.">
+                                <h4>Risk Analysis</h4>
+                                <p>"Analyze the document and list potential risks."</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                <!-- Typing/Streaming Response Indicator -->
+                <div class="typing-indicator-container" id="typingIndicator" style="display: none;">
+                    <div class="typing-bubble">
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+                    <span class="typing-text">Retrieving context & generating answer...</span>
+                </div>
+                
+                <!-- Message Input Footer Area -->
+                <footer class="chat-input-container">
+                    <div class="input-actions-bar">
+                        <div class="input-info-badge" id="activeDocsCount">
+                            <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                            <span>No context files</span>
+                        </div>
+                        <button class="text-link-btn" id="clearChatBtn">Clear Conversation History</button>
+                    </div>
+                    
+                    <form class="chat-form" id="chatForm">
+                        <textarea class="chat-input" id="chatInput" placeholder="Ask a question about uploaded documents..." rows="1" required></textarea>
+                        <button class="btn btn-primary send-btn" id="sendBtn" type="submit" aria-label="Send message">
+                            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" class="send-icon"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                        </button>
+                    </form>
+                </footer>
+            </div>
+            
+        </main>
+        
+        <!-- Sliding Settings Modal Drawer -->
+        <div class="settings-drawer" id="settingsDrawer">
+            <div class="drawer-header">
+                <h3>RAG Engine Configuration</h3>
+                <button class="icon-btn" id="settingsCloseBtn" aria-label="Close settings">
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            
+            <div class="drawer-content">
+                
+                <!-- LLM Provider Configuration -->
+                <div class="config-group">
+                    <label class="config-label">LLM Provider</label>
+                    <select class="config-select" id="providerSelect">
+                        <option value="groq">Groq (High-Speed Free/Paid)</option>
+                        <option value="together">Together AI (100+ Models)</option>
+                        <option value="openai">OpenAI (GPT Models)</option>
+                        <option value="gemini">Gemini (Google DeepMind)</option>
+                    </select>
+                </div>
+                
+                <div class="config-group">
+                    <label class="config-label">API Access Key</label>
+                    <div class="input-password-wrapper">
+                        <input type="password" class="config-input" id="apiKeyInput" placeholder="Enter provider API key...">
+                        <button type="button" class="eye-toggle" id="eyeToggle">
+                            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></circle><circle cx="12" cy="12" r="3"></circle></svg>
+                        </button>
+                    </div>
+                    <p class="config-help">Left blank, it uses the server's environment variable key if pre-configured.</p>
+                </div>
+                
+                <div class="config-group">
+                    <label class="config-label">Model Selection</label>
+                    <select class="config-select" id="modelSelect">
+                        <!-- Populated dynamically by app.js -->
+                    </select>
+                </div>
+                
+                <hr class="drawer-divider">
+                
+                <!-- Embeddings Configuration -->
+                <div class="config-group">
+                    <label class="config-label">Embedding Provider</label>
+                    <select class="config-select" id="embeddingProviderSelect">
+                        <option value="huggingface">Hugging Face (Free / Cloud Local)</option>
+                        <option value="openai">OpenAI (Neural)</option>
+                        <option value="together">Together AI (Neural)</option>
+                        <option value="none">No Embeddings (Keyword Search Fallback)</option>
+                    </select>
+                    <p class="config-help">Hugging Face runs completely free and parses without any key configuration.</p>
+                </div>
+                
+                <div class="config-group" id="embeddingKeyGroup" style="display: none;">
+                    <label class="config-label">Embedding API Key</label>
+                    <input type="password" class="config-input" id="embeddingApiKeyInput" placeholder="Enter embedding key (or uses LLM Key)...">
+                </div>
+                
+                <hr class="drawer-divider">
+                
+                <!-- Advanced RAG Parameters -->
+                <div class="config-group">
+                    <div class="range-header">
+                        <label class="config-label">Chunk Size</label>
+                        <span class="range-val" id="chunkSizeVal">1000 chars</span>
+                    </div>
+                    <input type="range" class="config-range" id="chunkSizeRange" min="200" max="4000" step="100" value="1000">
+                </div>
+                
+                <div class="config-group">
+                    <div class="range-header">
+                        <label class="config-label">Chunk Overlap</label>
+                        <span class="range-val" id="chunkOverlapVal">200 chars</span>
+                    </div>
+                    <input type="range" class="config-range" id="chunkOverlapRange" min="0" max="1000" step="50" value="200">
+                </div>
+                
+                <div class="config-group">
+                    <div class="range-header">
+                        <label class="config-label">Top-K Retrieved Context</label>
+                        <span class="range-val" id="topKVal">4 chunks</span>
+                    </div>
+                    <input type="range" class="config-range" id="topKRange" min="1" max="10" step="1" value="4">
+                </div>
+                
+                <div class="config-group">
+                    <div class="range-header">
+                        <label class="config-label">LLM Temperature</label>
+                        <span class="range-val" id="tempVal">0.3</span>
+                    </div>
+                    <input type="range" class="config-range" id="tempRange" min="0.0" max="1.0" step="0.05" value="0.3">
+                </div>
+                
+            </div>
+            
+            <div class="drawer-footer">
+                <button class="btn btn-secondary btn-block" id="settingsSaveBtn">Apply Configurations</button>
+            </div>
+        </div>
+        
+        <!-- Settings Overlay Background -->
+        <div class="overlay" id="overlay"></div>
+        
+    </div>
+    
+    <!-- JS application file -->
+    <script src="/static/app.js"></script>
+</body>
+</html>

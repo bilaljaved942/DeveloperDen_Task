@@ -1,27 +1,31 @@
-# Antigravity | Premium Glassmorphism RAG Chatbot
+# RAGGpt | Premium Glassmorphic RAG Chatbot
 
-A high-performance, modular **Retrieval-Augmented Generation (RAG) Chatbot** featuring a stunning glassmorphic UI and a robust FastAPI backend. It is designed to be highly flexible, modular, and extremely lightweight—running out of the box with zero complex external dependencies or heavy deep-learning packages (no PyTorch required!).
+A high-performance, modular **Retrieval-Augmented Generation (RAG) Chatbot** featuring a stunning light-pastel and electric-blue glassmorphic UI and a robust FastAPI backend. Designed to be highly flexible, modular, and extremely lightweight—running out of the box with zero complex external dependencies or heavy deep-learning packages (no PyTorch required!).
 
 ---
 
 ## 🌟 Key Features
 
-### 🎨 Premium Glassmorphism Frontend (Vanilla HTML5 / CSS3 / ES6)
-- **Deep space dark theme** with harmonized royal indigo, neon violet, and emerald accents.
-- **Drag-and-drop file upload zone** with interactive stage progress tracking (Reading → Parsing → Embedding → Done).
-- **Responsive design** suited for desktop, tablet, and mobile browsers (with slide-in sidebar and settings drawer).
-- **Real-time Server-Sent Events (SSE) chat streaming** with fluid typewriter effects.
-- **Interactive Retrieved Sources Drawer** showing matching filenames and similarity score metrics for each specific answer.
-- **LocalSettings persistence** using browser local storage to save custom configurations (API keys, models, parameters) across session reloads.
+### 🎨 Premium UI & UX Theme (Vanilla HTML5 / CSS3 / ES6)
+- **Vibrant Light Pastel Aesthetic:** A high-fidelity, Figma-inspired lilac-to-sky-blue flowing backdrop gradient on the body.
+- **Glassmorphic Floating Panels:** Sidebar and settings drawers designed using clean semi-transparent panels (`backdrop-filter: blur(20px)` and white glowing borders).
+- **Vibrant Royal/Electric Blue Accents:** High-contrast focus outlines, buttons, and user chat bubbles using premium electric-blue gradients.
+- **Responsive Layout:** Adapts dynamically to desktop, tablet, and mobile browsers (featuring a slide-in sidebar and full-screen settings drawer on small screens).
+- **SSE Chat Streaming:** Real-time Server-Sent Events with fluid typing indicators and typewriter effects.
+- **Collapsible Sources Drawer:** Displays matching chunk filenames and similarity percentage scores directly below every streamed answer.
 
 ### ⚙️ Production-Grade FastAPI Backend
 - **Multi-Format Document Parsing:** Native page-by-page PDF extraction (`pypdf`), DOCX paragraph & table parsing (`python-docx`), and clean TXT reader.
+- **Strict File Format Validation:** Dynamic multi-stage verification restricting uploads **exclusively** to `.pdf`, `.docx`, and `.txt` files.
+  - *Client-side:* Filters the file selection picker dynamically in the browser.
+  - *Server-side:* Validates extensions during upload, rejecting other formats with an HTTP `400 Bad Request` error.
 - **Semantic Text Splitter:** Custom `RecursiveTextSplitter` splitting long documents by double newlines, single newlines, and spaces to respect sentence boundaries.
 - **Lightweight Hybrid Vector DB:** Persistent SQLite database storing chunks and embeddings.
   - **Vector Cosine Similarity Search** using fast `numpy` calculations.
   - **BM25 Keyword Fallback Search** counting phrase frequencies, allowing the app to run completely offline without neural embedding keys!
 - **Flexible LLM Provider Factory:** High-speed streaming APIs supporting **Groq**, **Together AI**, **OpenAI**, and **Gemini** (utilizing async `httpx` SSE streams).
 - **Batch Embedding Engine:** Connects to OpenAI, Together AI, or Hugging Face serverless embedding inference API.
+- **Chat History & Context Maintenance:** Maintains full conversation memory (`chatHistory`) in the frontend state, packaging past exchanges back to the API for rich, follow-up conversation capabilities (e.g. *"Summarize what you just said in that first paragraph"*).
 
 ---
 
@@ -45,6 +49,10 @@ developerden_task/
 │       ├── index.html          # Responsive glassmorphic landing & layout structure
 │       ├── styles.css          # Curated UI variables, neon borders, and animations
 │       └── app.js              # SSE streaming stream reader and dynamic controls
+├── docs/                       # Automatically generated dummy test files folder
+│   ├── dummy.txt               # Sample plain text document
+│   ├── dummy.docx              # Sample Microsoft Word document
+│   └── dummy.pdf               # Sample PDF document
 ├── RAG Task.pdf                # Original task description document
 ├── test_rag.py                 # Automated RAG pipeline integration test
 ├── requirements.txt            # Python dependencies list
@@ -112,13 +120,13 @@ INFO: 1. Found test document: RAG Task.pdf
 INFO: 2. Parsing PDF using DocumentParser...
 INFO: ✓ PDF successfully parsed!
 INFO:    Extracted text character count: 1629
-INFO: 3. Chunking document using RecursiveTextSplitter...
+3. Chunking document using RecursiveTextSplitter...
 INFO: ✓ Document successfully chunked! (Generated 5 text chunks)
-INFO: 4. Testing SQLiteVectorStore database indexing...
+4. Testing SQLiteVectorStore database indexing...
 INFO: ✓ Test database initialized.
 INFO: ✓ Main document record indexed.
 INFO: ✓ Document chunks indexed successfully.
-INFO: 5. Testing keyword fallback retrieval on index...
+5. Testing keyword fallback retrieval on index...
 INFO:    Querying: 'FastAPI backend'
 INFO: ✓ Retrieval returned 2 relevant matches.
 INFO:    Match #0 (Score: 16.0): Source: RAG Task.pdf (chunk #1)...
@@ -128,11 +136,12 @@ INFO: === All Integration Tests Completed Successfully! ===
 ---
 
 ## 💡 How to Use the RAG App
-1. **Upload Content:** Drag and drop your PDFs, DOCX, or text files into the left sidebar. The progress bar will animate through the stages of extraction.
+1. **Upload Content:** Drag and drop your PDFs, DOCX, or text files into the left sidebar. Feel free to use the pre-generated sample documents in the **`docs/`** directory (`dummy.pdf`, `dummy.docx`, and `dummy.txt`) to test indexing!
 2. **Review Knowledge Base:** Processed files will appear in the **Indexed Knowledge Base** list with chunk and size details. Click the Trash icon to remove any document.
-3. **Configure Settings:** Click the purple **RAG Settings** button on the top right. Here you can:
+3. **Configure Settings:** Click the blue **RAG Settings** button on the top right. Here you can:
    - Select your LLM Provider (Groq, Together AI, OpenAI, Gemini).
    - Enter your API Key.
    - Choose your specific model.
    - Adjust sliding RAG parameters (Chunk Size, Overlap, Retrieved top-K, Temperature).
-4. **Chat & Stream:** Type a question in the main chat prompt (or click a Floating Suggestion card). Watch the response stream in real-time, complete with a collapsible **Retrieved Context Sources** list at the bottom of the message showing exact matching chunks.
+4. **Chat & Stream:** Type a question in the main chat prompt (or click a Floating Suggestion card). Watch the response stream in real-time. Collapsed **Retrieved Context Sources** will display at the bottom of the assistant bubble, indicating which specific document chunks contributed to the answer.
+5. **Follow-up Dialog:** Continue asking follow-up questions naturally—RAGGpt automatically tracks conversation memory to provide contextual replies.

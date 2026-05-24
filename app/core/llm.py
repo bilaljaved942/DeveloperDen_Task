@@ -101,7 +101,7 @@ class LLMClient:
             context_str += f"\n--- Source: {filename} (Chunk {chunk_idx}) ---\n{chunk['text']}\n"
             
         return (
-            "You are Antigravity, a premium agentic AI coding and RAG assistant.\n"
+            "You are RAGGpt, a premium agentic AI coding and RAG assistant.\n"
             "Your task is to answer the user's question as accurately, professionally, and helpfully as possible "
             "based strictly on the provided document context chunks below.\n\n"
             "Guidelines:\n"

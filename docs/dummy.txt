@@ -1,0 +1,9 @@
+RAGGpt Knowledge Base Text Document
+====================================
+
+This is a dummy text document containing sample information to verify the parsing, chunking, and indexing pipeline of RAGGpt.
+
+Key capabilities of RAGGpt include:
+- Real-time Server-Sent Events (SSE) streaming of answers.
+- Dual neural embedding and standard keyword search logic.
+- High-fidelity UI using premium CSS styling controls.

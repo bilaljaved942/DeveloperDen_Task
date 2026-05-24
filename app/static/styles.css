@@ -1,32 +1,32 @@
 /* ==========================================
-   Antigravity Premium RAG Chatbot Styling
+   RAGGpt Premium RAG Chatbot Styling
    ========================================== */
 
 /* Design Variables */
 :root {
-    --bg-primary: #090c10;
-    --bg-secondary: #121824;
-    --bg-sidebar: #0d111b;
-    --bg-drawer: rgba(13, 17, 27, 0.85);
+    --bg-primary: #f8fafc;
+    --bg-secondary: #ffffff;
+    --bg-sidebar: rgba(255, 255, 255, 0.45);
+    --bg-drawer: rgba(255, 255, 255, 0.85);
     
     --accent-purple: #8b5cf6;
-    --accent-purple-glow: rgba(139, 92, 246, 0.35);
-    --accent-indigo: #6366f1;
-    --accent-cyan: #06b6d4;
-    --accent-cyan-glow: rgba(6, 182, 212, 0.3);
+    --accent-purple-glow: rgba(139, 92, 246, 0.12);
+    --accent-indigo: #0062ff; /* Electric/royal blue */
+    --accent-cyan: #3b82f6; /* Bright sky blue */
+    --accent-cyan-glow: rgba(59, 130, 246, 0.12);
     --accent-emerald: #10b981;
     --accent-rose: #ef4444;
     
-    --text-primary: #f3f4f6;
-    --text-secondary: #9ca3af;
-    --text-muted: #6b7280;
+    --text-primary: #1e293b; /* Deep slate gray */
+    --text-secondary: #475569;
+    --text-muted: #64748b;
     
-    --border-glass: rgba(255, 255, 255, 0.06);
-    --border-active: rgba(139, 92, 246, 0.4);
+    --border-glass: rgba(0, 98, 255, 0.08);
+    --border-active: rgba(0, 98, 255, 0.35);
     
-    --glass-bg: rgba(18, 24, 36, 0.7);
-    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
-    --backdrop-blur: blur(14px);
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-shadow: 0 10px 30px rgba(0, 98, 255, 0.04);
+    --backdrop-blur: blur(20px);
     
     --font-heading: 'Outfit', 'Inter', sans-serif;
     --font-body: 'Inter', sans-serif;
@@ -49,7 +49,7 @@
 }
 
 body {
-    background-color: var(--bg-primary);
+    background: linear-gradient(135deg, #e0f2fe 0%, #f3e8ff 50%, #faf5ff 100%);
     color: var(--text-primary);
     font-family: var(--font-body);
     font-size: 15px;
@@ -76,7 +76,7 @@ body {
     background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.08);
     border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
@@ -103,18 +103,18 @@ body {
     font-size: 12px;
 }
 .btn-primary {
-    background: linear-gradient(135deg, var(--accent-purple), var(--accent-indigo));
+    background: linear-gradient(135deg, var(--accent-indigo), var(--accent-cyan));
     color: white;
-    box-shadow: 0 4px 15px var(--accent-purple-glow);
+    box-shadow: 0 4px 12px var(--accent-cyan-glow);
 }
 .btn-primary:hover {
     transform: translateY(-1.5px);
-    box-shadow: 0 6px 20px rgba(139, 92, 246, 0.55);
+    box-shadow: 0 6px 20px rgba(0, 98, 255, 0.35);
 }
 .btn-secondary {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.6);
     border: 1px solid var(--border-glass);
-    color: var(--text-primary);
+    color: var(--accent-indigo);
 }
 .btn-secondary:hover {
     background: rgba(255, 255, 255, 0.1);
@@ -153,6 +153,7 @@ body {
 .sidebar {
     width: var(--sidebar-width);
     background-color: var(--bg-sidebar);
+    backdrop-filter: var(--backdrop-blur);
     border-right: 1px solid var(--border-glass);
     display: flex;
     flex-direction: column;
@@ -215,9 +216,9 @@ body {
     font-weight: 600;
 }
 .badge {
-    background: rgba(6, 182, 212, 0.1);
-    color: var(--accent-cyan);
-    border: 1px solid rgba(6, 182, 212, 0.2);
+    background: rgba(0, 98, 255, 0.08);
+    color: var(--accent-indigo);
+    border: 1px solid rgba(0, 98, 255, 0.15);
     font-size: 11px;
     font-weight: 600;
     padding: 2px 8px;
@@ -226,18 +227,18 @@ body {
 
 /* Upload zone */
 .upload-zone {
-    border: 2px dashed var(--border-glass);
+    border: 2px dashed rgba(0, 98, 255, 0.2);
     border-radius: var(--radius-md);
     padding: 24px 16px;
     text-align: center;
     cursor: pointer;
     transition: var(--transition-smooth);
-    background: rgba(255, 255, 255, 0.01);
+    background: rgba(255, 255, 255, 0.35);
 }
 .upload-zone:hover, .upload-zone.dragover {
-    border-color: var(--accent-purple);
-    background: rgba(139, 92, 246, 0.03);
-    box-shadow: 0 0 15px rgba(139, 92, 246, 0.1);
+    border-color: var(--accent-indigo);
+    background: rgba(0, 98, 255, 0.04);
+    box-shadow: 0 0 15px rgba(0, 98, 255, 0.08);
 }
 .upload-icon {
     color: var(--text-muted);
@@ -333,15 +334,17 @@ body {
     align-items: center;
     justify-content: space-between;
     padding: 10px 12px;
-    background: rgba(255, 255, 255, 0.02);
+    background: rgba(255, 255, 255, 0.5);
     border: 1px solid var(--border-glass);
     border-radius: var(--radius-sm);
     margin-bottom: 8px;
     transition: var(--transition-smooth);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.01);
 }
 .document-item:hover {
-    border-color: rgba(255, 255, 255, 0.15);
-    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(0, 98, 255, 0.18);
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 4px 12px rgba(0, 98, 255, 0.03);
 }
 .doc-info {
     display: flex;
@@ -413,7 +416,7 @@ body {
     display: flex;
     flex-direction: column;
     height: 100vh;
-    background-color: var(--bg-primary);
+    background-color: transparent;
 }
 
 /* Top Bar */
@@ -426,7 +429,7 @@ body {
     padding: 0 28px;
     flex-shrink: 0;
     z-index: 50;
-    background: rgba(9, 12, 16, 0.5);
+    background: rgba(255, 255, 255, 0.35);
     backdrop-filter: var(--backdrop-blur);
 }
 .top-bar-left {
@@ -502,14 +505,14 @@ body {
     width: 80px;
     height: 80px;
     border-radius: 50%;
-    background: rgba(139, 92, 246, 0.05);
-    border: 1px solid rgba(139, 92, 246, 0.15);
+    background: rgba(0, 98, 255, 0.05);
+    border: 1px solid rgba(0, 98, 255, 0.15);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--accent-purple);
+    color: var(--accent-indigo);
     margin: 0 auto 24px auto;
-    box-shadow: 0 0 25px rgba(139, 92, 246, 0.05);
+    box-shadow: 0 0 25px rgba(0, 98, 255, 0.04);
 }
 .welcome-screen h2 {
     font-family: var(--font-heading);
@@ -530,17 +533,19 @@ body {
     text-align: left;
 }
 .suggestion-card {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid var(--border-glass);
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.8);
     border-radius: var(--radius-md);
     padding: 16px;
     cursor: pointer;
     transition: var(--transition-smooth);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.015);
 }
 .suggestion-card:hover {
-    border-color: var(--accent-purple);
-    background: rgba(255, 255, 255, 0.04);
+    border-color: var(--accent-indigo);
+    background: rgba(255, 255, 255, 0.95);
     transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 98, 255, 0.05);
 }
 .suggestion-card h4 {
     font-family: var(--font-heading);
@@ -614,8 +619,9 @@ body {
     margin-bottom: 4px;
 }
 .message-bubble pre {
-    background: rgba(0, 0, 0, 0.4);
-    border: 1px solid var(--border-glass);
+    background: #0f172a;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #f8fafc;
     border-radius: var(--radius-sm);
     padding: 12px;
     overflow-x: auto;
@@ -626,7 +632,8 @@ body {
 .message-bubble code {
     font-family: var(--font-mono);
     font-size: 13px;
-    background: rgba(0, 0, 0, 0.2);
+    background: rgba(0, 98, 255, 0.05);
+    color: #0062ff;
     padding: 2px 5px;
     border-radius: 4px;
 }
@@ -768,7 +775,7 @@ body {
 
 .chat-form {
     display: flex;
-    background: rgba(18, 24, 36, 0.5);
+    background: rgba(255, 255, 255, 0.7);
     backdrop-filter: var(--backdrop-blur);
     border: 1px solid var(--border-glass);
     border-radius: var(--radius-lg);
@@ -780,7 +787,8 @@ body {
 }
 .chat-form:focus-within {
     border-color: var(--border-active);
-    box-shadow: 0 0 20px rgba(139, 92, 246, 0.15);
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 10px 30px rgba(0, 98, 255, 0.06);
 }
 .chat-input {
     flex-grow: 1;
@@ -862,8 +870,8 @@ body {
 }
 .config-input, .config-select {
     width: 100%;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid var(--border-glass);
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(0, 0, 0, 0.08);
     color: var(--text-primary);
     padding: 8px 12px;
     border-radius: var(--radius-sm);
@@ -873,11 +881,11 @@ body {
     transition: var(--transition-smooth);
 }
 .config-input:focus, .config-select:focus {
-    border-color: var(--accent-purple);
-    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--accent-indigo);
+    background: rgba(255, 255, 255, 0.85);
 }
 .config-select option {
-    background: var(--bg-primary);
+    background: white;
     color: var(--text-primary);
 }
 .config-help {

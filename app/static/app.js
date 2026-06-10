@@ -2,26 +2,16 @@
    Antigravity Premium RAG Chatbot Javascript
    ========================================== */
 
-// Default Configurations
 const PROVIDER_MODELS = {
     groq: [
         { id: "llama-3.3-70b-versatile", name: "Llama 3.3 70B (Default)" },
         { id: "mixtral-8x7b-32768", name: "Mixtral 8x7B" },
         { id: "gemma2-9b-it", name: "Gemma 2 9B" }
     ],
-    together: [
-        { id: "meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo", name: "Llama 3.1 8B (Default)" },
-        { id: "meta-llama/Meta-Llama-3.1-70B-Instruct-Turbo", name: "Llama 3.1 70B" },
-        { id: "mistralai/Mixtral-8x7B-Instruct-v0.1", name: "Mixtral 8x7B" }
-    ],
     openai: [
         { id: "gpt-4o-mini", name: "GPT-4o Mini (Default)" },
         { id: "gpt-4o", name: "GPT-4o" },
         { id: "gpt-3.5-turbo", name: "GPT-3.5 Turbo" }
-    ],
-    gemini: [
-        { id: "gemini-1.5-flash", name: "Gemini 1.5 Flash (Default)" },
-        { id: "gemini-1.5-pro", name: "Gemini 1.5 Pro" }
     ]
 };
 
@@ -154,7 +144,7 @@ function updateModelOptions(provider, selectedModel) {
 
 function toggleEmbeddingKeyField() {
     const prov = els.embeddingProviderSelect.value;
-    if (prov === "openai" || prov === "together") {
+    if (prov === "openai") {
         els.embeddingKeyGroup.style.display = "block";
     } else {
         els.embeddingKeyGroup.style.display = "none";

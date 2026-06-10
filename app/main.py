@@ -184,17 +184,13 @@ async def chat_query(request: ChatRequest):
     RAG chat endpoint. Retrieves context and streams answer using Server-Sent Events (SSE).
     """
     # 1. Input Validation
-    if not request.apiKey and request.provider in ["groq", "together", "openai", "gemini"]:
-        # Allow gemini/groq etc to try default environment variable if apiKey is blank
+    if not request.apiKey and request.provider in ["groq", "openai"]:
+        # Allow groq etc to try default environment variable if apiKey is blank
         has_env_key = False
         p_upper = request.provider.upper()
         if p_upper == "GROQ" and settings.GROQ_API_KEY:
             has_env_key = True
-        elif p_upper == "TOGETHER" and settings.TOGETHER_API_KEY:
-            has_env_key = True
         elif p_upper == "OPENAI" and settings.OPENAI_API_KEY:
-            has_env_key = True
-        elif p_upper == "GEMINI" and settings.GEMINI_API_KEY:
             has_env_key = True
             
         if not has_env_key:
@@ -205,12 +201,8 @@ async def chat_query(request: ChatRequest):
     if not api_key:
         if request.provider == "groq":
             api_key = settings.GROQ_API_KEY
-        elif request.provider == "together":
-            api_key = settings.TOGETHER_API_KEY
         elif request.provider == "openai":
             api_key = settings.OPENAI_API_KEY
-        elif request.provider == "gemini":
-            api_key = settings.GEMINI_API_KEY
 
     # 2. Retrieve Context Chunks
     query_embedding = None
@@ -220,8 +212,6 @@ async def chat_query(request: ChatRequest):
             if not emb_key:
                 if request.embeddingProvider == "openai":
                     emb_key = settings.OPENAI_API_KEY
-                elif request.embeddingProvider == "together":
-                    emb_key = settings.TOGETHER_API_KEY
                     
             embs = await EmbeddingGenerator.get_embeddings(
                 texts=[request.query],

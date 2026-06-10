@@ -23,8 +23,8 @@ A high-performance, modular **Retrieval-Augmented Generation (RAG) Chatbot** fea
 - **Lightweight Hybrid Vector DB:** Persistent SQLite database storing chunks and embeddings.
   - **Vector Cosine Similarity Search** using fast `numpy` calculations.
   - **BM25 Keyword Fallback Search** counting phrase frequencies, allowing the app to run completely offline without neural embedding keys!
-- **Flexible LLM Provider Factory:** High-speed streaming APIs supporting **Groq**, **Together AI**, **OpenAI**, and **Gemini** (utilizing async `httpx` SSE streams).
-- **Batch Embedding Engine:** Connects to OpenAI, Together AI, or Hugging Face serverless embedding inference API.
+- **Flexible LLM Provider Factory:** High-speed streaming APIs supporting **Groq** and **OpenAI** (utilizing async `httpx` SSE streams).
+- **Batch Embedding Engine:** Connects to OpenAI or Hugging Face serverless embedding inference API.
 - **Chat History & Context Maintenance:** Maintains full conversation memory (`chatHistory`) in the frontend state, packaging past exchanges back to the API for rich, follow-up conversation capabilities (e.g. *"Summarize what you just said in that first paragraph"*).
 
 ---
@@ -88,8 +88,6 @@ Create a `.env` file:
 ```env
 OPENAI_API_KEY=your_openai_api_key_here
 GROQ_API_KEY=your_groq_api_key_here
-TOGETHER_API_KEY=your_together_api_key_here
-GEMINI_API_KEY=your_gemini_api_key_here
 ```
 
 ### 3. Run the Server
@@ -139,7 +137,7 @@ INFO: === All Integration Tests Completed Successfully! ===
 1. **Upload Content:** Drag and drop your PDFs, DOCX, or text files into the left sidebar. Feel free to use the pre-generated sample documents in the **`docs/`** directory (`dummy.pdf`, `dummy.docx`, and `dummy.txt`) to test indexing!
 2. **Review Knowledge Base:** Processed files will appear in the **Indexed Knowledge Base** list with chunk and size details. Click the Trash icon to remove any document.
 3. **Configure Settings:** Click the blue **RAG Settings** button on the top right. Here you can:
-   - Select your LLM Provider (Groq, Together AI, OpenAI, Gemini).
+   - Select your LLM Provider (Groq, OpenAI).
    - Enter your API Key.
    - Choose your specific model.
    - Adjust sliding RAG parameters (Chunk Size, Overlap, Retrieved top-K, Temperature).

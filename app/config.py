@@ -15,8 +15,6 @@ class Settings:
     # API Keys & Endpoints (with fallback to environment variables)
     OPENAI_API_KEY: str = os.getenv("OPENAI_API_KEY", "")
     GROQ_API_KEY: str = os.getenv("GROQ_API_KEY", "")
-    TOGETHER_API_KEY: str = os.getenv("TOGETHER_API_KEY", "")
-    GEMINI_API_KEY: str = os.getenv("GEMINI_API_KEY", "")
     
     # RAG Default Settings
     DEFAULT_CHUNK_SIZE: int = 1000

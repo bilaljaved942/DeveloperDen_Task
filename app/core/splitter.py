@@ -110,12 +110,6 @@ class RecursiveTextSplitter:
             # Shallow copy the original metadata
             chunk_meta = document_metadata.copy()
             chunk_meta["chunk_index"] = idx
-            
-            # Simple heuristic to guess page number for PDFs based on "--- Page Break ---"
-            if "pages" in document_metadata and document_metadata["file_type"] == "pdf":
-                # Find how many page breaks appear before this text chunk
-                # (approximate by looking at character indices in the full text)
-                pass # metadata is already loaded; we keep it clean.
                 
             chunks_with_metadata.append({
                 "text": chunk_text,

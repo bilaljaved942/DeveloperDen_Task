@@ -190,9 +190,7 @@
                     <label class="config-label">LLM Provider</label>
                     <select class="config-select" id="providerSelect">
                         <option value="groq">Groq (High-Speed Free/Paid)</option>
-                        <option value="together">Together AI (100+ Models)</option>
                         <option value="openai">OpenAI (GPT Models)</option>
-                        <option value="gemini">Gemini (Google DeepMind)</option>
                     </select>
                 </div>
                 
@@ -201,7 +199,7 @@
                     <div class="input-password-wrapper">
                         <input type="password" class="config-input" id="apiKeyInput" placeholder="Enter provider API key...">
                         <button type="button" class="eye-toggle" id="eyeToggle">
-                            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></circle><circle cx="12" cy="12" r="3"></circle></svg>
+                            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                         </button>
                     </div>
                     <p class="config-help">Left blank, it uses the server's environment variable key if pre-configured.</p>
@@ -222,7 +220,6 @@
                     <select class="config-select" id="embeddingProviderSelect">
                         <option value="huggingface">Hugging Face (Free / Cloud Local)</option>
                         <option value="openai">OpenAI (Neural)</option>
-                        <option value="together">Together AI (Neural)</option>
                         <option value="none">No Embeddings (Keyword Search Fallback)</option>
                     </select>
                     <p class="config-help">Hugging Face runs completely free and parses without any key configuration.</p>
